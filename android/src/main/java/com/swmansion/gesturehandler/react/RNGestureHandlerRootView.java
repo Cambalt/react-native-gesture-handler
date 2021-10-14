@@ -60,10 +60,15 @@ public class RNGestureHandlerRootView extends ReactViewGroup {
 
   @Override
   public boolean dispatchTouchEvent(MotionEvent ev) {
-    if (mEnabled && Assertions.assertNotNull(mRootHelper).dispatchTouchEvent(ev)) {
-      return true;
+    try {
+      if (mEnabled && Assertions.assertNotNull(mRootHelper).dispatchTouchEvent(ev)) {
+        return true;
+      }
+      return super.dispatchTouchEvent(ev);
+    } catch (java.lang.IllegalArgumentException e) {
+      e.printStackTrace();
+      return false;
     }
-    return super.dispatchTouchEvent(ev);
   }
 
   @Override
